@@ -1,19 +1,30 @@
+import 'package:chat_app/models/chat_message_entity';
+
 import "package:flutter/material.dart";
 
 class ChatInput extends StatelessWidget {
-  ChatInput({Key? key}) : super(key: key);
+  final Function(ChatMessageEntity) onSubmit;
+  ChatInput({Key? key, required this.onSubmit}) : super(key: key);
 
-  final chatMessagecontroller = TextEditingController();
 
   void onSendButtonPressed(){
-    print('ChatMessage: ${chatMessagecontroller.text}');
+    print('ChatMessage: ${chatMessageController.text}');
+
+    final newChatMessage = ChatMessageEntity(
+        text: chatMessageController.text,
+        id: "244",
+        createdAt: DateTime.now().millisecondsSinceEpoch,
+        author: Author(userName: 'poojab26'));
+
+    onSubmit(newChatMessage);
+
   }
 
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 80,
+      height: 100,
       child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -30,7 +41,7 @@ class ChatInput extends StatelessWidget {
     keyboardType: TextInputType.multiline,
     maxLines: 5,
     minLines: 1,
-    controller: chatMessagecontroller,
+    controller: chatMessageController,
     textCapitalization: TextCapitalization.sentences,
     style: TextStyle(color: Colors.white),
     decoration: InputDecoration(
@@ -39,10 +50,10 @@ class ChatInput extends StatelessWidget {
     border: InputBorder.none),
     )),
     IconButton(
-    onPressed: () {},
-    icon: Icon(
-        Icons.send, color: Colors.white
-    ),
+      onPressed: onSendButtonPressed,
+      icon: Icon(
+          Icons.send, color: Colors.white
+      ),
     ),
           ],
       ),
@@ -52,4 +63,3 @@ class ChatInput extends StatelessWidget {
         )
     );
   }
-}
