@@ -1,3 +1,4 @@
+import 'package:chat_app/login_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -10,11 +11,9 @@ void main() {
   // TODO: implement build
   return MaterialApp(
 
-  home: Scaffold(
-  appBar: AppBar(),
-  drawer: Drawer(),
-  body: Text ('hello!'),
-  ),
+    title: "Chat App!!!",
+    theme: ThemeData(primarySwatch: Colors.yellow),
+    home: LoginPage(),
   );
   }
 
