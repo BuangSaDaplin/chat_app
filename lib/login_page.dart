@@ -16,137 +16,177 @@ class LoginPage extends StatelessWidget {
   //TODO: Validate email and username values
   Future<void> loginUser(BuildContext context) async {    if (_formkey.currentState != null && _formkey.currentState!.validate()) {
     print(userNameController.text);
-      print(passwordController.text);
+    print(passwordController.text);
 
     await context.read<AuthService>().loginUser(userNameController.text);
-      Navigator.pushReplacementNamed(context, '/chat',
-          arguments: '${userNameController.text}');
+    Navigator.pushReplacementNamed(context, '/chat',
+        arguments: '${userNameController.text}');
 
-      print('login successful!');
-    } else {
-      print('not successful!');
-    }
+    print('login successful!');
+  } else {
+    print('not successful!');
+  }
   }
 
   final userNameController = TextEditingController();
   final passwordController = TextEditingController();
   final _mainUrl = 'https://poojabhaumik.com';
 
+  Widget _buildHeader(context) {
+    return Column(
+      children: [
+        Text(
+          'Let\'s sign you in!',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              fontSize: 30,
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 0.5),
+        ),
+        Text(
+          'Welcome back! \n You\'ve been missed!',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: 20,
+              color: Colors.blueGrey),
+        ),
+        verticalSpacing(24),
+        Container(
+          height: 200,
+          width: MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  fit: BoxFit.fitWidth,
+                  image: AssetImage('assets/illustration.png')),
+              borderRadius: BorderRadius.circular(24)),
+        ),
+        verticalSpacing(24),
+      ],
+    );
+  }
+
+  Widget _buildFooter() {
+    return Column(
+      children: [
+        GestureDetector(
+          onTap: () async {
+            print('Link clicked!');
+            if (!await launch(_mainUrl)) {
+              throw 'Could not launch this!';
+            }
+          },
+          child: Column(
+            children: [
+              Text('Find us on'),
+              Text(_mainUrl),
+            ],
+          ),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SocialMediaButton.twitter(
+                size: 20, url: "https://twitter.com/pooja_bhaumik"),
+            SocialMediaButton.linkedin(
+                size: 20, url: "https://linkedin.com/in/poojab26")
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildForm(context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Form(
+          key: _formkey,
+          child: Column(
+            children: [
+              LoginTextField(
+                hintText: "Enter your username",
+                validator: (value) {
+                  if (value != null && value.isNotEmpty && value.length < 5) {
+                    return "Your username should be more than 5 characters";
+                  } else if (value != null && value.isEmpty) {
+                    return "Please type your username";
+                  }
+                  return null;
+                },
+                controller: userNameController,
+              ),
+              verticalSpacing(24),
+              LoginTextField(
+                hasAsterisks: true,
+                controller: passwordController,
+                hintText: 'Enter your password',
+              ),
+            ],
+          ),
+        ),
+        verticalSpacing(24),
+        ElevatedButton(
+            onPressed: () async {
+              await loginUser(context);
+            },
+            child: Text(
+              'Login',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.w300),
+            )),
+      ],
+    );
+  }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+        backgroundColor: Colors.white,
         body: Center(
         child: Padding(
         padding: const EdgeInsets.all(24.0),
     child: SingleChildScrollView(
+    child:
+    LayoutBuilder(builder: (context, BoxConstraints constraints) {
+    if (constraints.maxWidth > 1000) {
+    // web layout
+    return Row(
+    children: [
+    Spacer(
+    flex: 1,
+    ),
+    Expanded(
     child: Column(
     mainAxisAlignment: MainAxisAlignment.center,
-    crossAxisAlignment: CrossAxisAlignment.stretch,
     children: [
-    Text(
-    'Let\'s sign you in!',
-    textAlign: TextAlign.center,
-    style: TextStyle(
-    fontSize: 30,
-    color: Colors.black,
-    fontWeight: FontWeight.bold,
-    letterSpacing: 0.5),
+    _buildHeader(context),
+    _buildFooter(),
+    ],
     ),
-    Text(
-    'Welcome back! \n You\'ve been missed!',
-    textAlign: TextAlign.center,
-    style: TextStyle(
-    fontWeight: FontWeight.w500,
-    fontSize: 20,
-    color: Colors.blueGrey),
     ),
-      Container(
-        height: 200,
-        width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                fit: BoxFit.fitWidth,
-                image: AssetImage('assets/illustration.png')),
-            borderRadius: BorderRadius.circular(56)),
-      ),
-
-      verticalSpacing(24),
-
-      height: 200,
+    Spacer(
+    flex: 1,
     ),
-
-    //TODO: Add Username & Password text fields
-
-    Form(
-    key: _formkey,
-    child: Column(
-    children: [
-    LoginTextField(
-    hintText: "Enter your username",
-    validator: (value) {
-    if (value != null &&
-    value.isNotEmpty &&
-    value.length < 5) {
-    return "Your username should be more than 5 characters";
-    } else if (value != null && value.isEmpty) {
-    return "Please type your username";
+    Expanded(child: _buildForm(context)),
+    Spacer(
+    flex: 1,
+    )
+    ]
+    );
     }
-    return null;
-    },
-    controller: userNameController,
-    ),
-    verticalSpacing(24),
-    LoginTextField(
-    hasAsterisks: true,
-    controller: passwordController,
-    hintText: 'Enter your password',
-    ),
-    ],
-    ),
-    ),
-    verticalSpacing(24),
-    ElevatedButton(
-        onPressed: () async {
-          await loginUser(context);
-    },
-    child: Text(
-    'Login',
-    style:
-    TextStyle(fontSize: 24, fontWeight: FontWeight.w300),
-    )),
-    GestureDetector(
-    onTap: () async{
-    //todo: Navigate to browser
-    print('Link clicked!');
-    if (!await launch(_mainUrl)){
-    throw 'Could not launch this!';
-    }
-    },
-    child: Column(
-    children: [
-    Text('Find us on'),
-      Text(_mainUrl),
-    ],
-    ),
-    ),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SocialMediaButton.facebook(
-            size: 20,
-            color: Colors.blue,
-            url: "https://www.facebook.com/share/1BPmT72qMA/",
-          ),
-          SocialMediaButton.linkedin(
-            url:
-            "https://www.linkedin.com/in/leanne-mae-baribe-282b85366",
-          )
-        ],
-      )
-    ],
-    ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        _buildHeader(context),
+        _buildForm(context),
+        _buildFooter(),
+      ],
+    );
+    }),
     ),
         ),
         ),
