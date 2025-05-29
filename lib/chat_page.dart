@@ -1,6 +1,9 @@
 import 'dart:convert';
 import 'package:chat_app/models/image_model.dart';
 import 'package:chat_app/repo/image_repository.dart';
+import 'package:chat_app/services/auth_service.dart';
+
+
 import 'package:chat_app/widgets/chat_bubble.dart';
 import 'package:chat_app/widgets/chat_input.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +29,6 @@ class _ChatPageState extends State<ChatPage> {
     rootBundle.loadString('assets/mock_messages.json').then((response) {
       final List<dynamic> decodedList = jsonDecode(response) as List;
 
-      final List<dynamic> decodedList = jsonDecode(response) as List;
       final List<ChatMessageEntity> _chatMessages = decodedList.map((listItem) {
         return ChatMessageEntity.fromJson(listItem);
       }).toList();
@@ -53,8 +55,6 @@ class _ChatPageState extends State<ChatPage> {
   //TODO: Move this to repository class
 
 
-
-
   @override
   void initState() {
     _loadInitialMessages();
@@ -65,42 +65,43 @@ class _ChatPageState extends State<ChatPage> {
   Widget build(BuildContext context) {
     final username = ModalRoute.of(context)!.settings.arguments as String;
     return Scaffold(
-      backgroundColor: Colors.white,
+        backgroundColor: Colors.white,
 
-      appBar: AppBar(
+        appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
         title: Text('Hi $username!'),
-        actions: [
-          IconButton(
-            onPressed: () {
+    actions: [
+    IconButton(
+    onPressed: () {
 
-              Navigator.pushReplacementNamed(context, '/');
-              print('Icon pressed');
-            },
-            icon: Icon(Icons.logout),
-          )
-        ],
+    Navigator.pushReplacementNamed(context, '/');
+    print('Icon pressed');
+    },
+    icon: Icon(Icons.logout),
+    )
+    ],
+    ),
+    body: Column(
+    children: [
+    Expanded(
+    child: ListView.builder(
+    itemCount: _messages.length,
+    itemBuilder: (context, index){
+    return ChatBubble(
+        alignment:_messages[index].author.userName ==
+            AuthService().getUserName()
+            ? Alignment.centerRight
+            : Alignment.centerLeft,
+        entity: _messages[index]);
+    })
+    ),
+      ChatInput(
+        onSubmit: onMessageSent,
       ),
-      body: Column(
-        children: [
-          Expanded(
-              child: ListView.builder(
-                  itemCount: _messages.length,
-                  itemBuilder: (context, index){
-                    return ChatBubble(
-                        alignment: _messages[index].author.userName == 'poojab26'
-                            ? Alignment.centerRight
-                            : Alignment.centerLeft,
-                        entity: _messages[index]);
-                  })
-          ),
-          ChatInput(
-            onSubmit: onMessageSent,
-          ),
-        ],
-      ),
+    ],
+    ),
     );
   }
 }
