@@ -9,7 +9,7 @@ class CounterStateful extends StatefulWidget {
   State<CounterStateful> createState() => _CounterStatefulState();
 }
 
-class  _CounterStatefulState extends State<CounterStateful> {
+class _CounterStatefulState extends State<CounterStateful> {
 
   int counter = 0;
 
