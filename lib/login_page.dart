@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  LoginPage({Key? key}) : super(key: key);
 
   void loginUser(){
+    print(userNameController.text);
+    print(passwordController.text);
     print('Login successful!');
   }
+
+  final userNameController = TextEditingController();
+  final passwordController = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -27,25 +33,46 @@ class LoginPage extends StatelessWidget {
     letterSpacing: 0.5),
     ),
 
-      Text(
-        'Welcome back! \n You\'ve been missed!',
-        textAlign: TextAlign.center,
-        style: TextStyle(
-            fontWeight: FontWeight.w500,
-            fontSize: 20,
-            color: Colors.blueGrey),
-      ),
-      Image.network(
-        'https://3009709.youcanlearnit.net/Alien_LIL_131338.png',
-        height: 200,
-      ),
+    Text(
+    'Welcome back! \n You\'ve been missed!',
+    textAlign: TextAlign.center,
+    style: TextStyle(
+    fontWeight: FontWeight.w500,
+    fontSize: 20,
+    color: Colors.blueGrey),
+    ),
+    Image.network(
+    'https://3009709.youcanlearnit.net/Alien_LIL_131338.png',
+    height: 200,
+    ),
 
-      ElevatedButton(
-          onPressed: loginUser,
-          child: Text(
-            'Click Me',
-            style: TextStyle(fontSize: 30, fontWeight: FontWeight.w300),
-          )),
+    TextField(
+    controller: userNameController,
+    decoration: InputDecoration(
+    hintText: 'Add your username',
+    hintStyle: TextStyle(color: Colors.blueGrey),
+    border: OutlineInputBorder()
+    ),
+    ),
+
+    TextField(
+    controller: passwordController,
+    obscureText: true,
+    decoration: InputDecoration(
+    hintText: 'Type your password',
+    hintStyle: TextStyle(color: Colors.blueGrey),
+    border: OutlineInputBorder()
+    ),
+    ),
+
+
+
+    ElevatedButton(
+    onPressed: loginUser,
+    child: Text(
+      'Login',
+      style: TextStyle(fontSize: 24, fontWeight: FontWeight.w300),
+    )),
       InkWell(
         splashColor: Colors.red,
         onDoubleTap: () {
