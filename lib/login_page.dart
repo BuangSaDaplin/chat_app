@@ -1,4 +1,4 @@
-import 'package:chat_app/chat_page.dart';
+//import 'package:chat_app/chat_page.dart';
 import 'package:chat_app/utils/spaces.dart';
 //import 'package:chat_app/utils/textfield_styles.dart';
 import 'package:chat_app/widgets/login_text_field.dart';
@@ -35,6 +35,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
         body: Center(
         child: Padding(
         padding: const EdgeInsets.all(24.0),
@@ -60,9 +61,19 @@ class LoginPage extends StatelessWidget {
     fontSize: 20,
     color: Colors.blueGrey),
     ),
-    Image.asset(
-    'assets/illustration.png',
-    height: 200,
+      Container(
+        height: 200,
+        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                fit: BoxFit.fitWidth,
+                image: AssetImage('assets/illustration.png')),
+            borderRadius: BorderRadius.circular(56)),
+      ),
+
+      verticalSpacing(24),
+
+      height: 200,
     ),
 
     //TODO: Add Username & Password text fields
