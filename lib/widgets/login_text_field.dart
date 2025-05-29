@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../utils/textfield_styles.dart';
 
+import 'package:chat_app/utils/textfield_styles';
 class LoginTextField extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
@@ -9,10 +9,10 @@ class LoginTextField extends StatelessWidget {
 
   const LoginTextField(
       {Key? key,
-      required this.controller,
-      required this.hintText,
-      this.validator,
-      this.hasAsterisks = false})
+        required this.controller,
+        required this.hintText,
+        this.validator,
+        this.hasAsterisks = false})
       : super(key: key);
 
   @override
@@ -24,7 +24,7 @@ class LoginTextField extends StatelessWidget {
       },
       controller: controller,
       decoration: InputDecoration(
-          hintText: '$hintText',
+          hintText: 'Add your username',
           hintStyle: ThemeTextStyle.loginTextFieldStyle,
           border: OutlineInputBorder()),
     );
