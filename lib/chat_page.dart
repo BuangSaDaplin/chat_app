@@ -71,14 +71,14 @@ class _ChatPageState extends State<ChatPage> {
         appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        centerTitle: true,
+        //centerTitle: true,
         title: Text('Hi $username!'),
     actions: [
       IconButton(
           onPressed: () {
             context.read<AuthService>().updateUserName("New Name!");
           },
-          icon: Icon(Icons.logout)),
+          icon: Icon(Icons.change_circle)),
     IconButton(
     onPressed: () {
       context.read<AuthService>().logoutUser();
