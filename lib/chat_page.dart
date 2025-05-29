@@ -9,7 +9,8 @@ class ChatPage extends StatelessWidget {
         appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-    title: Text("Hiii Kit!!!"),
+        centerTitle: true,
+        title: Text("Hiii Leanne!!!"),
     actions: [
     IconButton(
     onPressed: () {
@@ -19,7 +20,10 @@ class ChatPage extends StatelessWidget {
     )
     ],
     ),
-    body: ListView(
+    body: Column(
+    children: [
+    Expanded(
+    child: ListView(
     children: [
     Align(
     alignment: Alignment.centerLeft,
@@ -107,6 +111,10 @@ class ChatPage extends StatelessWidget {
     ),
     ),
     ),
+
+      ],
+    ),
+    ),
     Container(
     height: 100,
     decoration: BoxDecoration(
@@ -118,16 +126,16 @@ class ChatPage extends StatelessWidget {
     children: [
     IconButton(
     onPressed: () {},
-      icon: Icon(
-          Icons.add, color: Colors.white
-      ),
+    icon: Icon(
+    Icons.add, color: Colors.white
     ),
-        IconButton(
-        onPressed: () {},
-          icon: Icon(
-              Icons.send, color: Colors.white
-          ),
-        ),
+    ),
+    IconButton(
+    onPressed: () {},
+    icon: Icon(
+    Icons.send, color: Colors.white
+    ),
+    ),
     ],
     ),
     ),
