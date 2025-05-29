@@ -12,9 +12,9 @@ void main() {
   // TODO: implement build
   return MaterialApp(
 
-    title: "Chat App!!!",
+    title: "Chat App",
     theme: ThemeData(primarySwatch: Colors.yellow),
-    home: ChatPage(),
+    home: const ChatPage(),
   );
   }
   }
