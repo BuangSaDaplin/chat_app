@@ -3,6 +3,7 @@ import 'package:chat_app/utils/spaces.dart';
 //import 'package:chat_app/utils/textfield_styles.dart';
 import 'package:chat_app/widgets/login_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:social_media_buttons/social_media_button.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class LoginPage extends StatelessWidget {
@@ -117,7 +118,21 @@ class LoginPage extends StatelessWidget {
       Text(_mainUrl),
     ],
     ),
-    )
+    ),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SocialMediaButton.facebook(
+            size: 20,
+            color: Colors.blue,
+            url: "https://www.facebook.com/share/1BPmT72qMA/",
+          ),
+          SocialMediaButton.linkedin(
+            url:
+            "https://www.linkedin.com/in/leanne-mae-baribe-282b85366",
+          )
+        ],
+      )
     ],
     ),
     ),
