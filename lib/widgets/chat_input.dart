@@ -1,4 +1,5 @@
 import 'package:chat_app/models/chat_message_entity';
+import 'package:chat_app/widgets/picker_body';
 
 import "package:flutter/material.dart";
 
@@ -29,7 +30,14 @@ class ChatInput extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
           IconButton(
-          onPressed: () {},
+            onPressed: () {
+              //TODO: Open a bottom sheet that shows a grid of images
+              showModalBottomSheet(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return NetworkImagePickerBody();
+                  });
+            },
       icon: Icon(
         Icons.add,
         color: Colors.white,
