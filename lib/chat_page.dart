@@ -8,6 +8,7 @@ import 'package:chat_app/widgets/chat_bubble.dart';
 import 'package:chat_app/widgets/chat_input.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 import 'models/chat_message_entity';
 
@@ -91,7 +92,7 @@ class _ChatPageState extends State<ChatPage> {
     itemBuilder: (context, index){
     return ChatBubble(
         alignment:_messages[index].author.userName ==
-            AuthService().getUserName()
+            context.read<AuthService>().getUserName()
             ? Alignment.centerRight
             : Alignment.centerLeft,
         entity: _messages[index]);
