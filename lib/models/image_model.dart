@@ -13,12 +13,11 @@ class PixelfordImage {
 
   PixelfordImage(
       {required this.author,
-      required this.url,
-      required this.id,
-      required this.urlFullSize});
+        required this.url,
+        required this.id,
+        required this.urlFullSize});
 
   factory PixelfordImage.fromJson(Map<String, dynamic> json) =>
-      _$PixelformImageFromJson(json);
+      _$PixelfordImageFromJson(json);
 
-  Map<String, dynamic> toJson() => _$PixelformImageToJson(this);
-}
+  Map<String, dynamic> toJson() => _$PixelfordImageToJson(this);}

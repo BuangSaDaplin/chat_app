@@ -1,11 +1,10 @@
 import 'dart:convert';
-import 'package:chat_app/models/image_model';
+import 'package:chat_app/models/image_model.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:chat_app/widgets/chat_bubble.dart';
 import 'package:chat_app/widgets/chat_input.dart';
 import 'package:flutter/material.dart';
-
 import 'package:chat_app/models/chat_message_entity';
 
 
@@ -51,21 +50,24 @@ class _ChatPageState extends State<ChatPage> {
     setState(() {});
   }
 
-  _getNetworkImages() async {
+  Future<List<PixelfordImage>> _getNetworkImages() async {
     var endpointUrl = Uri.parse('https://picsum.photos/v2/list');
 
     final response = await http.get(endpointUrl);
 
     if (response.statusCode == 200) {
-      final List<dynamic> decodedList = jsonDecode(response.body) as List;
+      final List<dynamic> decodeList = jsonDecode(response.body) as List;
 
-      final List<PixelfordImage> _imageList = decodedList.map((listItem) {
+      final List<PixelfordImage> _imageList = decodeList.map((listItem) {
         return PixelfordImage.fromJson(listItem);
       }).toList();
-
       print(_imageList[0].urlFullSize);
+      return _imageList;
+    } else {
+      throw Exception('API not successful!');
     }
-  }
+    }
+
 
 
   @override
@@ -98,6 +100,14 @@ class _ChatPageState extends State<ChatPage> {
       ),
       body: Column(
         children: [
+          FutureBuilder<List<PixelfordImage>>(
+              future: _getNetworkImages(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<List<PixelfordImage>> snapshot) {
+                if (snapshot.hasData)
+                  return Image.network(snapshot.data![0].urlFullSize);
+                return CircularProgressIndicator();
+              }),
           Expanded(
               child: ListView.builder(
                   itemCount: _messages.length,
