@@ -3,6 +3,7 @@ import 'package:chat_app/utils/spaces.dart';
 //import 'package:chat_app/utils/textfield_styles.dart';
 import 'package:chat_app/widgets/login_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({Key? key}) : super(key: key);
@@ -27,6 +28,8 @@ class LoginPage extends StatelessWidget {
 
   final userNameController = TextEditingController();
   final passwordController = TextEditingController();
+  final _mainUrl = 'https://poojabhaumik.com';
+
 
   @override
   Widget build(BuildContext context) {
@@ -56,8 +59,8 @@ class LoginPage extends StatelessWidget {
     fontSize: 20,
     color: Colors.blueGrey),
     ),
-      Image.asset(
-        'assets/illustration.png',
+    Image.asset(
+    'assets/illustration.png',
     height: 200,
     ),
 
@@ -81,7 +84,7 @@ class LoginPage extends StatelessWidget {
     },
     controller: userNameController,
     ),
-      verticalSpacing(24),
+    verticalSpacing(24),
     LoginTextField(
     hasAsterisks: true,
     controller: passwordController,
@@ -90,7 +93,7 @@ class LoginPage extends StatelessWidget {
     ],
     ),
     ),
-      verticalSpacing(24),
+    verticalSpacing(24),
     ElevatedButton(
     onPressed: () {
     loginUser(context);
@@ -101,22 +104,24 @@ class LoginPage extends StatelessWidget {
     TextStyle(fontSize: 24, fontWeight: FontWeight.w300),
     )),
     GestureDetector(
-    onTap: () {
+    onTap: () async{
     //todo: Navigate to browser
     print('Link clicked!');
+    if (!await launch(_mainUrl)){
+    throw 'Could not launch this!';
+    }
     },
     child: Column(
     children: [
     Text('Find us on'),
-    Text('https://poojabhaumik.com'),
+      Text(_mainUrl),
     ],
     ),
     )
     ],
     ),
     ),
-    ),
+        ),
         ),
     );
   }
-}
