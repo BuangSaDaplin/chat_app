@@ -18,13 +18,15 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
+
+
   //initiate state of messages
   List<ChatMessageEntity> _messages = [];
 
   _loadInitialMessages() async {
-    rootBundle.loadString('assets/mock_messages.json').then((response){
+    final response = await rootBundle.loadString('assets/mock_messages.json');
 
-      final List<dynamic> decodedList = jsonDecode(response) as List;
+    final List<dynamic> decodedList = jsonDecode(response) as List;
 
     final List<ChatMessageEntity> _chatMessages = decodedList.map((listItem) {
       return ChatMessageEntity.fromJson(listItem);
@@ -36,14 +38,12 @@ class _ChatPageState extends State<ChatPage> {
     setState(() {
       _messages = _chatMessages;
     });
-    }).then((_){
-      print('done');
-    });
 
-    print('Something');
   }
-
-
+  onMessageSent(ChatMessageEntity entity) {
+    _messages.add(entity);
+    setState(() {});
+  }
 
   @override
   void initState() {
