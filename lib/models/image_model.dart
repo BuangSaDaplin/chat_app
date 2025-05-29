@@ -3,25 +3,21 @@ import 'package:json_annotation/json_annotation.dart';
 part 'image_model.g.dart';
 
 @JsonSerializable()
-class PixelformImage {
+class PixelfordImage {
   String id;
   String author;
-  String? title;
+  String url;
 
-  @JsonKey(name: 'url_full_size')
+  @JsonKey(name: 'download_url')
   String urlFullSize;
 
-  @JsonKey(name: 'url_small_size')
-  String urlSmallSize;
+  PixelfordImage(
+      {required this.author,
+      required this.url,
+      required this.id,
+      required this.urlFullSize});
 
-  PixelformImage(
-      { this.title,
-        required this.filename,
-        required this.urlSmallSize,
-        required this.id,
-        required this.urlFullSize});
-
-  factory PixelformImage.fromJson(Map<String, dynamic> json) =>
+  factory PixelfordImage.fromJson(Map<String, dynamic> json) =>
       _$PixelformImageFromJson(json);
 
   Map<String, dynamic> toJson() => _$PixelformImageToJson(this);
