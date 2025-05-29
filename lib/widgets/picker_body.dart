@@ -47,6 +47,7 @@ class NetworkImagePickerBody extends StatelessWidget {
                 child: Text('This is the error: ${snapshot.error}'),
               );
             }
+
             //return Image.network(snapshot.data![0].urlFullSize);
             return Padding(
               padding: const EdgeInsets.all(8.0),
